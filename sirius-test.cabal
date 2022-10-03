@@ -1,0 +1,62 @@
+cabal-version:      2.4
+name:               sirius-test
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+-- The license under which the package is released.
+-- license:
+author:             Gleb Lobanov
+maintainer:         mail@gleblobanov.ru
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+executable sirius-test
+    main-is:          Main.hs
+
+    -- Modules included in this executable, other than Main.
+    other-modules:
+        YandexSpeller
+        SiriusChecker
+
+    -- LANGUAGE extensions used by modules in this package.
+    -- other-extensions:
+    build-depends:    
+        base ^>= 4.14.3.0,
+        servant-server ^>= 0.19.1,
+        servant-client ^>= 0.19,
+        servant ^>= 0.19,
+        aeson ^>= 2.1.1.0,
+        mtl ^>= 2.2.2,
+        time ^>= 1.9.3,
+        lucid ^>= 2.11.1,
+        http-media ^>= 0.8.0.0,
+        http-client ^>= 0.7.13.1,
+        wai ^>= 3.2.3,
+        warp ^>= 3.3.22,
+        text >=1.2.3 && <1.3,
+        co-log ^>= 0.4.0.1
+    hs-source-dirs:   app
+    default-language: Haskell2010
+    default-extensions: 
+        DataKinds,
+        DeriveGeneric,
+        FlexibleInstances,
+        FlexibleContexts,
+        GADTs,
+        GeneralizedNewtypeDeriving,
+        MultiParamTypeClasses,
+        OverloadedStrings,
+        RankNTypes,
+        ScopedTypeVariables,
+        TypeOperators
