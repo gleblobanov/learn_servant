@@ -16,6 +16,7 @@ instance FromJSON TextToCheck
 
 data SpellResult where
   SpellResult :: {gradeSR :: Integer, wordsSR :: [Text]} -> SpellResult
+  EmptyResult :: SpellResult
   deriving (Eq, Show, Generic)
 
 instance ToJSON SpellResult
