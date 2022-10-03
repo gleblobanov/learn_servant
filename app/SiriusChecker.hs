@@ -7,6 +7,7 @@ import Servant as S ( Post, JSON, ReqBody, type (:>), Proxy(..) )
 import Servant.Types.SourceT (source)
 import YandexSpeller as YS ( SpellError(word) )
 import Data.List as DL ( map, length )
+import Prelude hiding (words)
 
 data TextToCheck where
   TextToCheck :: {textToCheck :: Text} -> TextToCheck
@@ -15,7 +16,7 @@ data TextToCheck where
 instance FromJSON TextToCheck
 
 data SpellResult where
-  SpellResult :: {gradeSR :: Integer, wordsSR :: [Text]} -> SpellResult
+  SpellResult :: {grade :: Integer, words :: [Text]} -> SpellResult
   EmptyResult :: SpellResult
   deriving (Eq, Show, Generic)
 
@@ -30,8 +31,8 @@ type CheckSpellingAPI =
 spellErrorsToSpellResult :: [SpellError] -> SpellResult
 spellErrorsToSpellResult es =
   SpellResult
-    { gradeSR = grade',
-      wordsSR = words'
+    { grade = grade',
+      words = words'
     }
   where
     grade' | errorCount > 5 = 0

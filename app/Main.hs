@@ -13,10 +13,13 @@ import SiriusChecker as SC
       SpellResult (EmptyResult),
       TextToCheck(TextToCheck),
       spellErrorsToSpellResult,
-      checkSpellingAPI )
+      checkSpellingAPI,
+      grade,
+      words
+      )
 import Colog
 import Data.Text.IO as TIO ( putStrLn)
-import Data.Text as T (pack, take)
+import Data.Text as T (pack, take, Text, intercalate)
 
 server :: Server CheckSpellingAPI
 server = checkSpellingHandler
@@ -24,9 +27,9 @@ server = checkSpellingHandler
     checkSpellingHandler :: TextToCheck -> Handler SpellResult
     checkSpellingHandler (TextToCheck t) =
 
-      let check :: (WithLog env Message m, MonadIO m) => m SpellResult
+      let check :: (WithLog env T.Text m, MonadIO m) => m SpellResult
           check = do 
-            logInfo $ "Start querying Yandex Speller. Checking a text starting with this lines: \n\"" 
+            logMsg $ "Start querying Yandex Speller. Checking a text starting with this lines: \n\"" 
               <> T.take 50 t 
               <> "...\""
             let query = checkSpellingQuery 
@@ -36,12 +39,15 @@ server = checkSpellingHandler
                   (Just YS.format)
             mr <- liftIO $ runQuery query
             case mr of
-              Just es -> return $ spellErrorsToSpellResult es
-              Nothing -> do logError "No spell erorrs returned."
+              Just es -> do let sr = spellErrorsToSpellResult es
+                            logMsg $ "Text is succesfully checked. The results are:\n"
+                              <> "grade is: " <> (T.pack . show . SC.grade) sr <> "\n"
+                              <> "words are: " <> (T.intercalate ", " . SC.words) sr
+                            return sr
+              Nothing -> do logMsg ("No spell erorrs returned." :: Text)
                             return EmptyResult
           
-          action = cmap fmtMessage logTextStdout
-      in liftIO $ usingLoggerT action check
+      in liftIO $ usingLoggerT (LogAction TIO.putStrLn) check
       
 
 app :: Application

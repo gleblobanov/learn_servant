@@ -39,8 +39,6 @@ executable sirius-test
         aeson ^>= 2.1.1.0,
         mtl ^>= 2.2.2,
         time ^>= 1.9.3,
-        lucid ^>= 2.11.1,
-        http-media ^>= 0.8.0.0,
         http-client ^>= 0.7.13.1,
         wai ^>= 3.2.3,
         warp ^>= 3.3.22,
