@@ -44,7 +44,7 @@ server = checkSpellingHandler
                               <> "grade is: " <> (T.pack . show . SC.grade) sr <> "\n"
                               <> "words are: " <> (T.intercalate ", " . SC.words) sr
                             return sr
-              Nothing -> do logMsg ("No spell erorrs returned." :: Text)
+              Nothing -> do logMsg ("No spell errors returned." :: Text)
                             return EmptyResult
           
       in liftIO $ usingLoggerT (LogAction TIO.putStrLn) check
