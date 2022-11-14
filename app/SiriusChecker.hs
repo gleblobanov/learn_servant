@@ -22,7 +22,7 @@ data SpellResult where
 
 instance ToJSON SpellResult
 
--- POST text to check and return JSON
+-- POST textMonokai Pro Icons to check and return JSON
 type CheckSpellingAPI =
   "check_spelling"
     :> ReqBody '[JSON] TextToCheck
